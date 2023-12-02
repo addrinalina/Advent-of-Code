@@ -7,7 +7,6 @@ result = 0
 
 digits = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 numbers = [1,2,3,4,5,6,7,8,9]
-lista = []
 
 for line in x:
     print(line)
@@ -54,11 +53,7 @@ for line in x:
     num = int(first)*10 + int(last)
     print(num)
 
-    lista.append(num)
-
     result += num
-
-print(lista)
 
 print("RESULTADO = ", result)
 

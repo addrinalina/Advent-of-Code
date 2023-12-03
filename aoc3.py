@@ -1,3 +1,5 @@
+# https://adventofcode.com/2023/day/3 - Assuming that no gear is adjacent to 3 numbers, and that each number can only be adjacent to one "*"
+
 with open("C:\\Users\\adrir\\Documents\\GitHub\\Advent-of-Code\\input3.txt") as f:
     lines = f.readlines()
     x = [line[:-1] for line in lines[:-1]] + [lines[-1]]

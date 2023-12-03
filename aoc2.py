@@ -3,10 +3,10 @@ with open("C:\\Users\\adrir\\Documents\\GitHub\\Advent-of-Code\\input2.txt") as 
     x = [line[:-1] for line in lines[:-1]] + [lines[-1]]
 print(x)
 
+mincubes = {"b":0, "g":0, "r":0}
 res = []
 
 for i, game in enumerate(x):
-    print(i, game)
     pos = True
     dentro = False
     num = "0"
@@ -21,28 +21,19 @@ for i, game in enumerate(x):
             k += 1
             char = game[j+k]
         j += k+1
-        if char == "b":
-            if int(num) > 14:
-                pos = False
-                print("Muchos blues")
-                break
-            num = "0"        
-        elif char == "g":
-            if int(num) > 13:
-                pos = False
-                print("Muchos green")
-                break
-            num = "0"   
-        elif char == "r":
-            if int(num) > 12:
-                pos = False
-                print("Muchos red")
-                break
-            num = "0"   
+        if (char in ["b", "g", "r"]):
+            if (int(num) > mincubes[char]):
+                mincubes[char] = int(num)
+            num = "0"
+    print("Game ", i, mincubes)
 
-    if pos:
-        print("Este sí")
-        res.append(i+1)
-
+    # Calculation of the power of the set
+    power = 1
+    for value in mincubes.values():
+        power *= value
+    print(power)
+    res.append(power)
+    mincubes = {"b":0, "g":0, "r":0}
+    
 print(res)
 print(sum(res))

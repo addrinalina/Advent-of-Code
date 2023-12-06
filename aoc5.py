@@ -73,6 +73,7 @@ while i < len(x):
         humtoloc.append(num)
     i+=1
 print(humtoloc)
+print("mapeo hecho")
 
 soils = []
 ferts = []
@@ -82,13 +83,16 @@ temps = []
 hums = []
 locs = []
 
-for i, seed in enumerate(seeds):
-    seed = int(seed)
-    for tuple in seedtosoil:
-        if tuple[1] <= seed < tuple[1]+tuple[2]:
-            soils.append(tuple[0]+(seed-tuple[1])) 
-    if len(soils) == i:
-        soils.append(seed)
+seedpairs = [(seeds[i], seeds[i + 1]) for i in range(0, len(seeds), 2) if i + 1 < len(seeds)]
+
+for i, pair in enumerate(seedpairs):
+    for seed in range(int(pair[0]),int(pair[0])+int(pair[1])):
+        for tuple in seedtosoil:
+            if tuple[1] <= seed < tuple[1]+tuple[2]:
+                soils.append(tuple[0]+(seed-tuple[1])) 
+        if len(soils) == i:
+            soils.append(seed)
+print("Tengo soils")
 
 for i, soil in enumerate(soils):
     soil = int(soil)
@@ -97,6 +101,7 @@ for i, soil in enumerate(soils):
             ferts.append(tuple[0]+(soil-tuple[1])) 
     if len(ferts) == i:
         ferts.append(soil)
+print("Tengo ferts")
 
 for i, fert in enumerate(ferts):
     fert = int(fert)
@@ -105,6 +110,7 @@ for i, fert in enumerate(ferts):
             wats.append(tuple[0]+(fert-tuple[1])) 
     if len(wats) == i:
         wats.append(fert)
+print("Tengo wats")
 
 for i, wat in enumerate(wats):
     wat = int(wat)
@@ -113,6 +119,7 @@ for i, wat in enumerate(wats):
             lights.append(tuple[0]+(wat-tuple[1])) 
     if len(lights) == i:
         lights.append(wat)
+print("Tengo lights")
 
 for i, light in enumerate(lights):
     light = int(light)
@@ -121,6 +128,7 @@ for i, light in enumerate(lights):
             temps.append(tuple[0]+(light-tuple[1])) 
     if len(temps) == i:
         temps.append(light)
+print("Tengo temps")
 
 for i, temp in enumerate(temps):
     temp = int(temp)
@@ -129,6 +137,7 @@ for i, temp in enumerate(temps):
             hums.append(tuple[0]+(temp-tuple[1])) 
     if len(hums) == i:
         hums.append(temp)
+print("Tengo hums")
 
 for i, hum in enumerate(hums):
     hum = int(hum)
@@ -137,6 +146,7 @@ for i, hum in enumerate(hums):
             locs.append(tuple[0]+(hum-tuple[1])) 
     if len(locs) == i:
         locs.append(hum)
+print("Tengo locs")
 
 print("Final locs", locs)
 print(min(locs))

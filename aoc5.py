@@ -5,15 +5,15 @@ import re
 with open("C:\\Users\\aromo\\OneDrive - No Hunger Forum\\Documentos\\Advent of Code\\input5.txt") as f:
     lines = f.readlines()
     x = [line[:-1] for line in lines[:-1]] + [lines[-1]]
-print(x)
+# print(x)
 
-seed_to_soil = {}
-soil_to_fertilizer = {}
-fertilizer_to_water ={}
-water_to_light = {}
-light_to_temperature = {}
-temperature_to_humidity = {}
-humidity_to_location = {}
+seedtosoil = []
+soiltofert = []
+fertowat = []
+watolight = []
+lightotemp = []
+temptohum = []
+humtoloc = []
 
 i = 0
 line = x[i]
@@ -27,100 +27,118 @@ while len(re.findall("soil-to-fertilizer", line)) == 0:
     num = [int(n) for n in re.findall(r"\d+", line)]
     print(num)
     if len(num) != 0:
-        for j in range(num[2]):
-            seed_to_soil[num[1]+j] = num[0]+j
+        seedtosoil.append(num)
     i+=1
     line = x[i]
-print(seed_to_soil)
+print(seedtosoil)
 while len(re.findall("fertilizer-to-water", line)) == 0:
     num = [int(n) for n in re.findall(r"\d+", line)]
-    print(num)
     if len(num) != 0:
-        for j in range(num[2]):
-            soil_to_fertilizer[num[1]+j] = num[0]+j
+        soiltofert.append(num)
     i+=1
     line = x[i]
-print(soil_to_fertilizer)
+print(soiltofert)
 while len(re.findall("water-to-light", line)) == 0:
     num = [int(n) for n in re.findall(r"\d+", line)]
-    print(num)
     if len(num) != 0:
-        for j in range(num[2]):
-            fertilizer_to_water[num[1]+j] = num[0]+j
+        fertowat.append(num)
     i+=1
     line = x[i]
-print(fertilizer_to_water)
+print(fertowat)
 while len(re.findall("light-to-temperature", line)) == 0:
     num = [int(n) for n in re.findall(r"\d+", line)]
-    print(num)
     if len(num) != 0:
-        for j in range(num[2]):
-            water_to_light[num[1]+j] = num[0]+j
+        watolight.append(num)
     i+=1
     line = x[i]
-print(water_to_light)
+print(watolight)
 while len(re.findall("temperature-to-humidity", line)) == 0:
     num = [int(n) for n in re.findall(r"\d+", line)]
-    print(num)
     if len(num) != 0:
-        for j in range(num[2]):
-            light_to_temperature[num[1]+j] = num[0]+j
+        lightotemp.append(num)
     i+=1
     line = x[i]
-print(light_to_temperature)
+print(lightotemp)
 while len(re.findall("humidity-to-location", line)) == 0:
     num = [int(n) for n in re.findall(r"\d+", line)]
-    print(num)
     if len(num) != 0:
-        for j in range(num[2]):
-            temperature_to_humidity[num[1]+j] = num[0]+j
+        temptohum.append(num)
     i+=1
     line = x[i]
-print(temperature_to_humidity)
+print(temptohum)
 while i < len(x):
     line = x[i]
     num = [int(n) for n in re.findall(r"\d+", line)]
-    print(num)
     if len(num) != 0:
-        for j in range(num[2]):
-            humidity_to_location[num[1]+j] = num[0]+j
+        humtoloc.append(num)
     i+=1
-print(humidity_to_location)
+print(humtoloc)
 
-result = []
+soils = []
+ferts = []
+wats = []
+lights = []
+temps = []
+hums = []
+locs = []
 
-for seed in seeds:
+for i, seed in enumerate(seeds):
     seed = int(seed)
-    if seed in seed_to_soil.keys():
-        soil = seed_to_soil[seed]
-    else:
-        soil = seed
-    if soil in soil_to_fertilizer.keys():
-        fert = soil_to_fertilizer[soil]
-    else:
-        fert = soil
-    if fert in fertilizer_to_water.keys():
-        water = fertilizer_to_water[fert]
-    else:
-        water = fert
-    if water in water_to_light.keys():
-        light = water_to_light[water]
-    else:
-        light = water
-    if light in light_to_temperature.keys():
-        temp = light_to_temperature[light]
-    else:
-        temp = light
-    if temp in temperature_to_humidity.keys():
-        hum = temperature_to_humidity[temp]
-    else:
-        hum = temp
-    if hum in humidity_to_location.keys():
-        loc = humidity_to_location[hum]
-    else:
-        loc = hum
-    result.append(loc)
-print(result)
-print(min(result))
+    for tuple in seedtosoil:
+        if tuple[1] <= seed < tuple[1]+tuple[2]:
+            soils.append(tuple[0]+(seed-tuple[1])) 
+    if len(soils) == i:
+        soils.append(seed)
+
+for i, soil in enumerate(soils):
+    soil = int(soil)
+    for tuple in soiltofert:
+        if tuple[1] <= soil < tuple[1]+tuple[2]:
+            ferts.append(tuple[0]+(soil-tuple[1])) 
+    if len(ferts) == i:
+        ferts.append(soil)
+
+for i, fert in enumerate(ferts):
+    fert = int(fert)
+    for tuple in fertowat:
+        if tuple[1] <= fert < tuple[1]+tuple[2]:
+            wats.append(tuple[0]+(fert-tuple[1])) 
+    if len(wats) == i:
+        wats.append(fert)
+
+for i, wat in enumerate(wats):
+    wat = int(wat)
+    for tuple in watolight:
+        if tuple[1] <= wat < tuple[1]+tuple[2]:
+            lights.append(tuple[0]+(wat-tuple[1])) 
+    if len(lights) == i:
+        lights.append(wat)
+
+for i, light in enumerate(lights):
+    light = int(light)
+    for tuple in lightotemp:
+        if tuple[1] <= light < tuple[1]+tuple[2]:
+            temps.append(tuple[0]+(light-tuple[1])) 
+    if len(temps) == i:
+        temps.append(light)
+
+for i, temp in enumerate(temps):
+    temp = int(temp)
+    for tuple in temptohum:
+        if tuple[1] <= temp < tuple[1]+tuple[2]:
+            hums.append(tuple[0]+(temp-tuple[1])) 
+    if len(hums) == i:
+        hums.append(temp)
+
+for i, hum in enumerate(hums):
+    hum = int(hum)
+    for tuple in humtoloc:
+        if tuple[1] <= hum < tuple[1]+tuple[2]:
+            locs.append(tuple[0]+(hum-tuple[1])) 
+    if len(locs) == i:
+        locs.append(hum)
+
+print("Final locs", locs)
+print(min(locs))
 
 

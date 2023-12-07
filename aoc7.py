@@ -13,7 +13,7 @@ hands = []
 bids = {}
 
 def custom_sort_key1(s):
-    order =  {'2':0, '3': 1, '4': 2, '5': 3, '6': 4, '7': 5, '8': 6, '9': 7, 'T': 8, 'J': 9, 'Q': 10, 'K': 11, 'A': 12}
+    order =  {'J':0, '2':1, '3': 2, '4': 3, '5': 4, '6': 5, '7': 6, '8': 7, '9': 8, 'T': 9, 'Q': 10, 'K': 11, 'A': 12}
     return [order.get(c, float('inf')) for c in s]
 
 def custom_sort_key2(key):
@@ -33,7 +33,12 @@ ranks = {}
 
 for hand in hands:
     count = Counter(hand)
+    js = 0
+    if 'J' in count and count['J'] != 5:
+        js += count['J']
+        del count['J']
     count = sorted(list(count.values()))
+    count[-1] += js
     counts[hand] = count
 
 grouped_hands = {}
@@ -69,4 +74,3 @@ for hand in hands:
 print(results)
 
 print(sum(results.values()))
-

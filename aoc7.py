@@ -21,8 +21,9 @@ def custom_sort_key2(key):
     return order.get(key, float('inf'))
 
 for line in x:
-    hands.append(line[0:5])
-    bids[line[0:5]] = int(line[6:9])
+    hand, bid = line.strip().split(' ')
+    hands.append(hand)
+    bids[hand] = int(bid)
 
 print(hands)
 print(bids)

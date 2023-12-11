@@ -2,49 +2,69 @@
 
 import re
 import numpy as np
+import copy
 
-with open("C:\\Users\\aromo\\OneDrive - No Hunger Forum\\Documentos\\Advent of Code\\input11.txt") as f:
+with open("C:\\Users\\adrir\\Documents\\GitHub\\Advent-of-Code-23\\input11.txt") as f:
     lines = f.readlines()
     x = [line[:-1] for line in lines[:-1]] + [lines[-1]]
 
 
 x = [list(row) for row in x]
-expanded = x.copy()
+# expanded = x.copy()
 
+emptyrows = []
+emptycols = []
 
-j = 0
+# j = 0
 for i in range(len(x)):
     if all(char == '.' for char in x[i]):
-        expanded.insert(i+j, x[i].copy())
-        j += 1
+        emptyrows.append(i)
 
+print(emptyrows)
 
-transposed = np.transpose(expanded)
-transexp = list(transposed.copy())
+transposed = np.transpose(x)
+# transexp = list(transposed.copy())
 
-j = 0
+# j = 0
 for i in range(len(transposed)):
     if all(char == '.' for char in transposed[i]):
-        transexp.insert(i+j, transposed[i].copy())
-        j += 1
+        emptycols.append(i)
     
-finalexp = np.transpose(transexp)
+# finalexp = np.transpose(transexp)
+print(emptycols)
 
-for line in finalexp:
-    print(line)
+exp = 999999
 
-coords = []
-for i in range(len(finalexp)):
-    for j in range(len(finalexp[0])):
-        if finalexp[i][j] == '#':
-            coords.append([i,j])
+original_coords = []
+for i in range(len(x)):
+    for j in range(len(x[0])):
+        if x[i][j] == '#':
+            original_coords.append([i,j])
 
-print(coords)
+print(original_coords)
 dists = []
+final_coords = copy.deepcopy(original_coords)
 
-for i in range(len(coords)):
-    for j in range(i+1,len(coords)):
-        dist = abs(coords[j][0]-coords[i][0]) + abs(coords[j][1]-coords[i][1])
+# First rows, coordenada left
+for row in emptyrows:
+    for i in range(len(original_coords)):
+        # print(original_coords[i])
+        if original_coords[i][0] > row:
+            final_coords[i][0] += exp
+            # print("Añado", exp, "a la fila", original_coords[i][0], "y se va a", final_coords[i])
+# Now cols
+for col in emptycols:
+    for i in range(len(original_coords)):
+        if original_coords[i][1] > col:
+            # print("Añado", exp, "a la columna", coord[1])
+            final_coords[i][1] += exp
+
+print(original_coords)
+print(final_coords)
+
+for i in range(len(final_coords)):
+    for j in range(i+1,len(final_coords)):
+        dist = abs(final_coords[j][0]-final_coords[i][0]) + abs(final_coords[j][1]-final_coords[i][1])
         # print("Entre", i+1, "y", j+1, "hay", dist)
         dists.append(dist)
 
